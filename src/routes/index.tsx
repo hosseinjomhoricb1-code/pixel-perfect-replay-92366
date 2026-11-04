@@ -163,6 +163,81 @@ function Index() {
             ))}
           </div>
         </section>
+
+        {/* Why Choose Us */}
+        <section id="why" className="scroll-mt-6 border-t px-6 py-24 md:px-14">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <h2 className="font-display text-5xl leading-tight md:text-6xl">Why Choose Us</h2>
+            <p className="max-w-xs text-sm text-muted-foreground">We combine deep market knowledge with a passion for exceptional homes.</p>
+          </div>
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map((f) => (
+              <div key={f.title}>
+                <span className="grid h-12 w-12 place-items-center rounded-full border"><f.icon className="h-5 w-5" /></span>
+                <h3 className="mt-5 font-medium">{f.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{f.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Call to Action */}
+        <section className="px-3 pb-3 md:px-6 md:pb-6">
+          <div className="relative overflow-hidden rounded-3xl text-ink-foreground">
+            <img src={beach} alt="Luxury beachfront villa at sunset" loading="lazy" width={1280} height={800} className="absolute inset-0 h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-ink/55" />
+            <div className="relative z-10 flex flex-col items-center px-6 py-28 text-center md:py-36">
+              <h2 className="max-w-2xl font-display text-5xl leading-tight md:text-6xl">Find Your Perfect Home</h2>
+              <p className="mt-5 max-w-md text-sm opacity-85">Let our experts guide you to a home that fits the life you've always imagined.</p>
+              <a href="#collection" className="mt-8 inline-flex items-center gap-3 rounded-full bg-background py-1.5 pl-6 pr-1.5 text-sm font-semibold text-foreground">
+                <span className="whitespace-nowrap">EXPLORE OUR COLLECTION</span>
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-ink-foreground"><ArrowUpRight className="h-4 w-4" /></span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-ink px-6 pb-8 pt-16 text-ink-foreground md:px-14">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+            <div>
+              <span className="font-display text-2xl">◐ LeonHome</span>
+              <p className="mt-4 max-w-xs text-sm opacity-70">Architect-designed smart homes, expert agents and curated listings in the world's most sought-after locations.</p>
+              <div className="mt-6 flex gap-3">
+                {[Linkedin, Instagram, Twitter].map((I, i) => (
+                  <a key={i} href="#" aria-label="Social link" className="glass grid h-9 w-9 place-items-center rounded-full"><I className="h-4 w-4" /></a>
+                ))}
+              </div>
+            </div>
+            <nav>
+              <h3 className="text-sm font-medium">Quick Links</h3>
+              <ul className="mt-4 space-y-2.5 text-sm opacity-70">
+                {nav.map((n) => <li key={n.label}><a href={n.href} className="hover:opacity-100">{n.label}</a></li>)}
+              </ul>
+            </nav>
+            <div>
+              <h3 className="text-sm font-medium">Categories</h3>
+              <ul className="mt-4 space-y-2.5 text-sm opacity-70">
+                {["Beachfront Villas", "Family Homes", "Cliffside Retreats", "City Apartments"].map((c) => <li key={c}><a href="#collection" className="hover:opacity-100">{c}</a></li>)}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium">Contact</h3>
+              <ul className="mt-4 space-y-3 text-sm opacity-70">
+                <li className="flex items-center gap-2.5"><Phone className="h-4 w-4 shrink-0" />+92 319 949 2086</li>
+                <li className="flex items-center gap-2.5"><Mail className="h-4 w-4 shrink-0" />hello@leonhome.com</li>
+                <li className="flex items-center gap-2.5"><MapPin className="h-4 w-4 shrink-0" />12 Coastal Avenue, Cliffside Bay</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-ink-foreground/15 pt-6 text-xs opacity-60 md:flex-row">
+            <p>© 2026 LeonHome. All Rights Reserved.</p>
+            <div className="flex gap-6">
+              <a href="#" className="hover:opacity-100">Privacy Policy</a>
+              <a href="#" className="hover:opacity-100">Terms &amp; Conditions</a>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
