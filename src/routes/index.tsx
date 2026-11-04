@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Phone, Linkedin, Instagram, Twitter, CheckCircle2, Star } from "lucide-react";
+import { ArrowUpRight, Phone, Linkedin, Instagram, Twitter, CheckCircle2, Star, Users, Gem, HeartHandshake, ShieldCheck, Mail, MapPin } from "lucide-react";
 import hero from "@/assets/hero-house.jpg";
 import villa from "@/assets/cliff-villa.jpg";
 import family from "@/assets/family-home.jpg";
@@ -22,7 +22,13 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const nav = ["Home", "Agents", "Work In Progress", "Collection", "About Us"];
+const nav = [
+  { label: "Home", href: "#home" },
+  { label: "Agents", href: "#agents" },
+  { label: "Work In Progress", href: "#why" },
+  { label: "Collection", href: "#collection" },
+  { label: "About Us", href: "#about" },
+];
 const team = [
   { img: t1, name: "Erika Dias", role: "Head Manager" },
   { img: t2, name: "Tiana Korsgaard", role: "Sales Marketing" },
