@@ -35,9 +35,15 @@ const team = [
   { img: t3, name: "Tiana Donin", role: "Property Agent" },
 ];
 const listings = [
-  { img: beach, name: "Luxury Beachfront Villa", price: "$1,620,000" },
-  { img: family, name: "Modern Family Home", price: "$4,500,000" },
-  { img: villa, name: "Cliffside Retreat", price: "$3,200,000" },
+  { img: beach, name: "Luxury Beachfront Villa", category: "Beachfront", price: "$1,620,000" },
+  { img: family, name: "Modern Family Home", category: "Family Living", price: "$4,500,000" },
+  { img: villa, name: "Cliffside Retreat", category: "Cliffside", price: "$3,200,000" },
+];
+const features = [
+  { icon: Users, title: "Expert Real Estate Agents", text: "Seasoned professionals who know every neighborhood and market trend." },
+  { icon: Gem, title: "Exclusive Luxury Properties", text: "A curated portfolio of exceptional homes you won't find elsewhere." },
+  { icon: HeartHandshake, title: "Personalized Service", text: "Every search tailored to your lifestyle, taste and budget." },
+  { icon: ShieldCheck, title: "Trusted Property Guidance", text: "Transparent advice and support at every step of your journey." },
 ];
 
 function Index() {
@@ -78,7 +84,7 @@ function Index() {
             ))}
           </div>
 
-          <a href="#listings" className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full bg-background py-1.5 pl-6 pr-1.5 text-sm font-semibold text-foreground">
+          <a href="#collection" className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full bg-background py-1.5 pl-6 pr-1.5 text-sm font-semibold text-foreground">
             <span className="whitespace-nowrap">DISCOVER MORE</span> <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-ink-foreground"><ArrowUpRight className="h-4 w-4" /></span>
           </a>
         </section>
@@ -151,7 +157,8 @@ function Index() {
                   <img src={l.img} alt={l.name} loading="lazy" width={1280} height={800} className={`w-full rounded-3xl object-cover ${i === 1 ? "aspect-[16/10]" : "aspect-[4/3]"}`} />
                   <span className="glass absolute left-4 top-4 flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-ink-foreground"><CheckCircle2 className="h-3.5 w-3.5" />Available Property</span>
                 </div>
-                <div className="mt-4 flex justify-between font-medium"><span>{l.name}</span><span>{l.price}</span></div>
+                <div className="mt-4 flex items-baseline justify-between gap-3 font-medium"><span>{l.name}</span><span className="whitespace-nowrap">{l.price}</span></div>
+                <p className="mt-1 text-xs text-muted-foreground">{l.category}</p>
               </article>
             ))}
           </div>
