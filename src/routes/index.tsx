@@ -73,7 +73,7 @@ function Index() {
           </div>
 
           <a href="#listings" className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full bg-background py-1.5 pl-6 pr-1.5 text-sm font-semibold text-foreground">
-            DISCOVER MORE <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-ink-foreground"><ArrowUpRight className="h-4 w-4" /></span>
+            <span className="whitespace-nowrap">DISCOVER MORE</span> <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-ink-foreground"><ArrowUpRight className="h-4 w-4" /></span>
           </a>
         </section>
 
