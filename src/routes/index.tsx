@@ -61,7 +61,7 @@ function Index() {
             <p className="text-xs opacity-80">Since 2023</p>
             <h1 className="animate-rise mt-2 max-w-md text-2xl font-medium uppercase leading-snug md:max-w-xl md:text-4xl lg:text-5xl">Upgrade your life with smart home technology</h1>
           </div>
-          <p aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 select-none text-center font-display text-[clamp(3.5rem,15vw,12rem)] leading-none opacity-90">LEON HOME</p>
+          <p aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 select-none text-center font-display top-[55%] text-[clamp(3.5rem,14vw,11rem)] leading-none opacity-90">LEON HOME</p>
 
           <div className="absolute bottom-24 right-5 z-10 hidden w-52 flex-col gap-4 md:flex">
             {[["5.9K+", "Successfully delivering innovative projects around the world"], ["10K+", "Award-winning innovative projects delivered globally"]].map(([n, t]) => (
