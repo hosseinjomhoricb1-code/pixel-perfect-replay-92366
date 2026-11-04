@@ -57,13 +57,13 @@ function Index() {
             </div>
           </header>
 
-          <div className="relative z-10 px-5 md:px-12">
+          <div className="relative z-10 mt-4 px-5 md:mt-6 md:px-12">
             <p className="text-xs opacity-80">Since 2023</p>
-            <h1 className="animate-rise mt-2 max-w-xl text-3xl font-medium uppercase leading-tight md:text-5xl">Upgrade your life with smart home technology</h1>
+            <h1 className="animate-rise mt-2 max-w-md text-2xl font-medium uppercase leading-snug md:max-w-xl md:text-4xl lg:text-5xl">Upgrade your life with smart home technology</h1>
           </div>
-          <p aria-hidden className="pointer-events-none absolute inset-x-0 top-[34%] z-0 select-none text-center font-display text-[18vw] leading-none opacity-90 xl:text-[15rem]">LEON HOME</p>
+          <p aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 select-none text-center font-display text-[clamp(3.5rem,15vw,12rem)] leading-none opacity-90">LEON HOME</p>
 
-          <div className="absolute right-5 top-[46%] z-10 hidden w-52 flex-col gap-4 md:flex">
+          <div className="absolute bottom-24 right-5 z-10 hidden w-52 flex-col gap-4 md:flex">
             {[["5.9K+", "Successfully delivering innovative projects around the world"], ["10K+", "Award-winning innovative projects delivered globally"]].map(([n, t]) => (
               <div key={n} className="glass rounded-2xl p-5">
                 <div className="text-4xl font-light">{n}</div>
