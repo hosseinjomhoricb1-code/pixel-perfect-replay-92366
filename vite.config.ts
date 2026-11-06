@@ -12,7 +12,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // server.headers/cors/proxy in the sandbox — `server.allowedHosts` is preserved.
 // Entries match exactly, or a leading "." allows that domain and its subdomains.
 // The preview server inherits server.allowedHosts, so this covers `vite preview` too.
-const ALLOWED_HOSTS = ["sb-32t71t097aw2.vercel.run"];
+const ALLOWED_HOSTS = ["sb-32t71t097aw2.vercel.run", "sb-15rv0z477iao.vercel.run"];
 
 export default defineConfig({
   vite: {
