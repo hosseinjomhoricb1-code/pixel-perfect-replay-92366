@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, Phone, Linkedin, Instagram, Twitter, CheckCircle2, Star, Users, Gem, HeartHandshake, ShieldCheck, Mail, MapPin } from "lucide-react";
-import hero from "@/assets/hero-house.jpg";
+import { HeroScrollVideo } from "@/components/hero-scroll-video";
 import villa from "@/assets/cliff-villa.jpg";
 import family from "@/assets/family-home.jpg";
 import beach from "@/assets/beach-villa.jpg";
@@ -52,7 +52,7 @@ function Index() {
       <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-background">
         {/* Hero */}
         <section id="home" className="relative h-[100svh] max-h-[860px] min-h-[640px] overflow-hidden rounded-3xl text-ink-foreground">
-          <img src={hero} alt="Curved glass house on a coastal cliff" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
+          <HeroScrollVideo className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/50" />
           <header className="relative z-10 flex items-center justify-between gap-4 p-5 md:p-7">
             <span className="font-display text-2xl">◐ LeonHome</span>
