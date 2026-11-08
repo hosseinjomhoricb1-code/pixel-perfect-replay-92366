@@ -17,22 +17,23 @@ export function HeroScrollVideo({ className = "" }: HeroScrollVideoProps) {
     video.pause();
     video.currentTime = 0;
 
-    const animate = () => {
-      const smoothing = 0.14;
-      currentProgressRef.current += (targetProgressRef.current - currentProgressRef.current) * smoothing;
-      if (video.duration) video.currentTime = currentProgressRef.current * video.duration;
+    const getScrollProgress = () => {
+      const hero = video.parentElement;
+      const scrollTop = document.scrollingElement?.scrollTop ?? window.scrollY;
+      const heroStart = hero ? hero.getBoundingClientRect().top + scrollTop : 0;
+      const heroDistance = Math.max(hero?.clientHeight ?? window.innerHeight, 1);
+      return Math.min(Math.max((scrollTop - heroStart) / heroDistance, 0), 1);
+    };
 
-      if (Math.abs(targetProgressRef.current - currentProgressRef.current) > 0.0005) {
-        frameRef.current = window.requestAnimationFrame(animate);
-      } else {
-        frameRef.current = null;
-      }
+    const animate = () => {
+      targetProgressRef.current = getScrollProgress();
+      currentProgressRef.current += (targetProgressRef.current - currentProgressRef.current) * 0.16;
+      if (video.duration) video.currentTime = currentProgressRef.current * video.duration;
+      frameRef.current = window.requestAnimationFrame(animate);
     };
 
     const syncToScroll = () => {
-      const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      targetProgressRef.current = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
-      if (frameRef.current === null) frameRef.current = window.requestAnimationFrame(animate);
+      targetProgressRef.current = getScrollProgress();
     };
 
     const handleLoadedMetadata = () => {
