@@ -6,49 +6,47 @@ type HeroScrollVideoProps = {
 
 export function HeroScrollVideo({ className = "" }: HeroScrollVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const frameRef = useRef<number | null>(null);
-  const targetProgressRef = useRef(0);
-  const currentProgressRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+  const targetTimeRef = useRef(0);
+  const displayedTimeRef = useRef(0);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
+    const getScrollTime = () => {
+      const hero = video.closest("section");
+      const scrollTop = document.documentElement.scrollTop || window.scrollY;
+      const heroTop = hero ? hero.getBoundingClientRect().top + scrollTop : 0;
+      const heroHeight = Math.max(hero?.getBoundingClientRect().height || window.innerHeight, 1);
+      const progress = Math.min(Math.max((scrollTop - heroTop) / heroHeight, 0), 1);
+      return progress * (Number.isFinite(video.duration) ? video.duration : 0);
+    };
+
+    const updateTarget = () => {
+      targetTimeRef.current = getScrollTime();
+    };
+
+    const renderFrame = () => {
+      const distance = targetTimeRef.current - displayedTimeRef.current;
+      displayedTimeRef.current += distance * 0.14;
+      if (Math.abs(distance) < 0.01) displayedTimeRef.current = targetTimeRef.current;
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        video.currentTime = displayedTimeRef.current;
+      }
+      animationFrameRef.current = window.requestAnimationFrame(renderFrame);
+    };
+
     video.pause();
-    video.currentTime = 0;
-
-    const getScrollProgress = () => {
-      const hero = video.parentElement;
-      const scrollTop = document.scrollingElement?.scrollTop ?? window.scrollY;
-      const heroStart = hero ? hero.getBoundingClientRect().top + scrollTop : 0;
-      const heroDistance = Math.max(hero?.clientHeight ?? window.innerHeight, 1);
-      return Math.min(Math.max((scrollTop - heroStart) / heroDistance, 0), 1);
-    };
-
-    const animate = () => {
-      targetProgressRef.current = getScrollProgress();
-      currentProgressRef.current += (targetProgressRef.current - currentProgressRef.current) * 0.16;
-      if (video.duration) video.currentTime = currentProgressRef.current * video.duration;
-      frameRef.current = window.requestAnimationFrame(animate);
-    };
-
-    const syncToScroll = () => {
-      targetProgressRef.current = getScrollProgress();
-    };
-
-    const handleLoadedMetadata = () => {
-      video.currentTime = 0;
-      syncToScroll();
-    };
-
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    window.addEventListener("scroll", syncToScroll, { passive: true });
-    syncToScroll();
+    video.addEventListener("loadedmetadata", updateTarget);
+    window.addEventListener("scroll", updateTarget, { passive: true });
+    updateTarget();
+    animationFrameRef.current = window.requestAnimationFrame(renderFrame);
 
     return () => {
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      window.removeEventListener("scroll", syncToScroll);
-      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current);
+      video.removeEventListener("loadedmetadata", updateTarget);
+      window.removeEventListener("scroll", updateTarget);
+      if (animationFrameRef.current !== null) window.cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
