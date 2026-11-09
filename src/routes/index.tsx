@@ -51,8 +51,8 @@ function Index() {
     <main className="min-h-screen bg-frame p-3 md:p-6">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-background">
         {/* Hero */}
-        <section id="home" className="relative h-[100svh] max-h-[860px] min-h-[640px] overflow-hidden rounded-3xl text-ink-foreground">
-          <HeroScrollVideo className="absolute inset-0 h-full w-full object-cover" />
+        <section id="home" className="relative h-[190svh] min-h-[1200px] rounded-3xl text-ink-foreground">
+          <HeroScrollVideo poster={villa} className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/50" />
           <header className="relative z-10 flex items-center justify-between gap-4 p-5 md:p-7">
             <span className="font-display text-2xl">◐ LeonHome</span>
