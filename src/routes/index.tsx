@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, Phone, Linkedin, Instagram, Twitter, CheckCircle2, Star, Users, Gem, HeartHandshake, ShieldCheck, Mail, MapPin } from "lucide-react";
 import hero from "@/assets/hero-house.jpg";
@@ -47,12 +48,101 @@ const features = [
 ];
 
 function Index() {
+  const heroWrapRef = useRef<HTMLElement>(null);
+  const heroViewRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const wrap = heroWrapRef.current;
+    const view = heroViewRef.current;
+    if (!video || !wrap || !view) return;
+
+    // Accessibility: honor reduced-motion preference by showing the static poster image instead.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      video.pause();
+      video.style.display = "none";
+      return;
+    }
+
+    let raf = 0;
+    let wasPinned = false;
+
+    const update = () => {
+      raf = 0;
+      if (!video.duration || Number.isNaN(video.duration)) return;
+      const rect = wrap.getBoundingClientRect();
+      const viewH = view.offsetHeight || window.innerHeight;
+      const total = rect.height - viewH;
+      if (total <= 0) return;
+      const absTop = -rect.top;
+
+      if (absTop <= 0) {
+        // Hero is at (or still below) its natural position — free-loop playback.
+        video.style.transform = "";
+        if (wasPinned) {
+          video.currentTime = 0;
+          wasPinned = false;
+        }
+        if (video.paused) video.play().catch(() => {});
+        return;
+      }
+
+      if (absTop >= total) {
+        // Scroll-pinned phase complete — hold the final frame (kitchen reveal).
+        if (!video.paused) video.pause();
+        video.currentTime = video.duration - 0.05;
+        wasPinned = true;
+        return;
+      }
+
+      // Pinned phase: scroll drives the video timeline (enter-the-kitchen scrub)
+      // plus a slow cinematic zoom for the 3D push-in feel.
+      wasPinned = true;
+      if (!video.paused) video.pause();
+      const p = absTop / total;
+      const t = p * (video.duration - 0.05);
+      if (Math.abs(video.currentTime - t) > 0.1) video.currentTime = t;
+      const eased = p * p * (3 - 2 * p); // smoothstep easing
+      video.style.transform = `scale(${(1 + eased * 0.2).toFixed(4)})`;
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    const onMeta = () => onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    video.addEventListener("loadedmetadata", onMeta);
+    update();
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      video.removeEventListener("loadedmetadata", onMeta);
+    };
+  }, []);
+
   return (
     <main className="min-h-screen bg-frame p-3 md:p-6">
       <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-background">
         {/* Hero */}
-        <section id="home" className="relative h-[100svh] max-h-[860px] min-h-[640px] overflow-hidden rounded-3xl text-ink-foreground">
-          <img src={hero} alt="Curved glass house on a coastal cliff" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" />
+        <section ref={heroWrapRef} id="home" className="relative h-[280svh]">
+          <div ref={heroViewRef} className="sticky top-0 h-[100svh] min-h-[640px] overflow-hidden rounded-3xl text-ink-foreground">
+            {/* Static image stays underneath as a fallback/poster so the section is never blank. */}
+            <img src={hero} alt="Curved glass house on a coastal cliff" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
+            <video
+              ref={videoRef}
+              src="/videos/leon-hero.mp4"
+              poster={hero}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover will-change-transform"
+            />
           <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink/50" />
           <header className="relative z-10 flex items-center justify-between gap-4 p-5 md:p-7">
             <span className="font-display text-2xl">◐ LeonHome</span>
@@ -87,6 +177,7 @@ function Index() {
           <a href="#collection" className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-full bg-background py-1.5 pl-6 pr-1.5 text-sm font-semibold text-foreground">
             <span className="whitespace-nowrap">DISCOVER MORE</span> <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-ink-foreground"><ArrowUpRight className="h-4 w-4" /></span>
           </a>
+          </div>
         </section>
 
         {/* About */}
