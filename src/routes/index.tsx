@@ -84,7 +84,7 @@ function Index() {
           video.currentTime = 0;
           wasPinned = false;
         }
-        if (video.paused) video.play().catch(() => {});
+        if (!video.paused) video.pause();
         return;
       }
 
@@ -125,7 +125,7 @@ function Index() {
 
   return (
     <main className="min-h-screen bg-frame p-3 md:p-6">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-background">
+      <div className="mx-auto max-w-7xl overflow-clip rounded-3xl bg-background">
         {/* Hero */}
         <section ref={heroWrapRef} id="home" className="relative h-[280svh]">
           <div ref={heroViewRef} className="sticky top-0 h-[100svh] min-h-[640px] overflow-hidden rounded-3xl text-ink-foreground">
@@ -133,11 +133,9 @@ function Index() {
             <img src={hero} alt="Curved glass house on a coastal cliff" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" aria-hidden="true" />
             <video
               ref={videoRef}
-              src="/videos/leon-hero.mp4"
+                            src="/videos/leon-hero-test.mp4"
               poster={hero}
-              autoPlay
               muted
-              loop
               playsInline
               preload="auto"
               aria-hidden="true"
